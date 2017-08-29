@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(R.id.content, MyFragment(), MyFragment::class.java.name).commitAllowingStateLoss()
 
         button.setOnClickListener {
-            EventBus.post(ToastEvent(), "fragment")
+            EventBus.post(ToastEvent())
         }
     }
 
