@@ -1,6 +1,6 @@
 # EventBusKotlin
 
-用 Kotlin 简单实现了一个 EventBus
+用 Kotlin 简单实现了一个 EventBus
 
 #### 注册和取消注册
 ```kotlin
