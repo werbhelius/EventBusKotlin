@@ -2,10 +2,9 @@ package com.werb.eventbuskotlin
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.werb.eventbus.DEFAULT_TAG
+import android.widget.Toast
 import com.werb.eventbus.EventBus
 import com.werb.eventbus.Subscriber
-import com.werb.eventbus.ThreadMode
 import kotlinx.android.synthetic.main.activity_main.*
 import java.net.URL
 
@@ -32,9 +31,10 @@ class MainActivity : AppCompatActivity() {
         EventBus.unRegister(this)
     }
 
-    @Subscriber(mode = ThreadMode.BACKGROUND)
+    @Subscriber(priority = 101)
     private fun toast(event: ToastEvent){
-        run()
+        Toast.makeText(this, "lalallalalalal", Toast.LENGTH_SHORT).show()
+        println("myActivity - 101")
     }
 
     private fun run() {

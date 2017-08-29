@@ -28,7 +28,7 @@ internal class SubscriberMethodHunter(private val subscriberMap: MutableMap<Even
                         if (isImplementIEvent(paramsEvent)) {
                             method.isAccessible = true
                             val eventType = EventType(paramsEvent.newInstance() as IEvent, annotation.tag)
-                            val subscription = Subscription(WeakReference(subscriber), method, annotation.mode, eventType)
+                            val subscription = Subscription(WeakReference(subscriber), method, annotation, eventType)
                             subscribe(eventType, subscription)
                         }
                     }

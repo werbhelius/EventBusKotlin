@@ -17,10 +17,11 @@ internal object EventDispatcher {
     private val mainHandler = MainEventHandler()
     private val asyncHandler = AsyncEventHandler()
 
-    fun dispatcherEvent(list : CopyOnWriteArrayList<Subscription>){
-        for (subscription in list){
-            val eventHandler = getEventHandler(subscription.threadMode)
-            eventHandler.handleEvent(subscription)
+    fun dispatcherEvent(list: CopyOnWriteArrayList<Subscription>) {
+        val sortedBy = list.sortedByDescending { it.priority }
+        sortedBy.forEach {
+            val eventHandler = getEventHandler(it.threadMode)
+            eventHandler.handleEvent(it)
         }
     }
 

@@ -23,10 +23,20 @@ class MyFragment: Fragment() {
         textView.text = "今天星期一"
     }
 
-    @Subscriber(tag = "fragment")
+    @Subscriber(priority = 100)
     private fun change(event: ToastEvent){
         textView.text = "今天星期天"
         textView.setTextColor(resources.getColor(R.color.colorPrimary))
+
+        println("myActivity - 100")
+    }
+
+    @Subscriber(priority = 200)
+    private fun change2(event: ToastEvent){
+        textView2.text = "今天星期五"
+        textView2.setTextColor(resources.getColor(R.color.colorAccent))
+
+        println("myActivity - 200")
     }
 
 }
