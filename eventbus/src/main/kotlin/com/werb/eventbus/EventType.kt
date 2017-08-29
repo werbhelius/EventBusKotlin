@@ -5,19 +5,7 @@ package com.werb.eventbus
  * Created by wanbo <werbhelius@gmail.com> on 2017/8/19.
  * */
 
-internal class EventType {
-
-    lateinit var event: IEvent
-    lateinit var tag: String
-
-    constructor(event: IEvent) {
-        EventType(event, DEFAULT_TAG)
-    }
-
-    constructor(event: IEvent, tag: String) {
-        this.event = event
-        this.tag = tag
-    }
+internal class EventType(var event: IEvent,var tag: String) {
 
     override fun equals(other: Any?): Boolean {
         // 比较内存引用地址，相同则返回 true

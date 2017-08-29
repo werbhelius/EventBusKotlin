@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(R.id.content, MyFragment(), MyFragment::class.java.name).commitAllowingStateLoss()
 
         button.setOnClickListener {
-            EventBus.post(ToastEvent())
+            EventBus.post(ToastEvent(), "fragment")
         }
     }
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         EventBus.unRegister(this)
     }
 
-    @Subscriber(DEFAULT_TAG, ThreadMode.BACKGROUND)
+    @Subscriber(mode = ThreadMode.BACKGROUND)
     private fun toast(event: ToastEvent){
         run()
     }
