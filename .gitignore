@@ -20,3 +20,6 @@ local.properties
 
 # Misc
 .DS_Store
+
+.classpath
+.project

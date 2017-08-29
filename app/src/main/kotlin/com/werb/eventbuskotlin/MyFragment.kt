@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.werb.eventbus.DEFAULT_TAG
 import com.werb.eventbus.EventBus
 import com.werb.eventbus.Subscriber
+import com.werb.eventbus.ThreadMode
 import kotlinx.android.synthetic.main.my_fragment.*
 
 /** Created by wanbo <werbhelius@gmail.com> on 2017/8/29. */
@@ -31,7 +33,7 @@ class MyFragment: Fragment() {
         println("myActivity - 100")
     }
 
-    @Subscriber(priority = 200)
+    @Subscriber(tag = DEFAULT_TAG, priority = 200, mode = ThreadMode.MAIN)
     private fun change2(event: ToastEvent){
         textView2.text = "今天星期五"
         textView2.setTextColor(resources.getColor(R.color.colorAccent))
