@@ -36,10 +36,10 @@ object EventBus {
     }
 
     fun post(event: IEvent, tag: String) {
-        val eventType = EventType(event, tag)
+        val eventType = EventType(event.javaClass, tag)
         val list = methodHunter.getMatchEventType(eventType)
         list?.let {
-            EventDispatcher.dispatcherEvent(it)
+            EventDispatcher.dispatcherEvent(event, it)
         }
     }
 

@@ -22,7 +22,7 @@ class MyFragment: Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         EventBus.register(this)
 
-        textView.text = "今天星期一"
+        info.text = "还未登录，请点击按钮登录"
     }
 
     override fun onDestroyView() {
@@ -30,19 +30,5 @@ class MyFragment: Fragment() {
         EventBus.unRegister(this)
     }
 
-    @Subscriber()
-    private fun change(event: ToastEvent){
-        textView.text = "今天星期天"
-        textView.setTextColor(resources.getColor(R.color.colorPrimary))
-
-        println("myFragment-" + Thread.currentThread().name)
-    }
-
-    @Subscriber(mode = ThreadMode.MAIN)
-    private fun change2(event: ToastEvent){
-        textView2.text = "今天星期五"
-        textView2.setTextColor(resources.getColor(R.color.colorAccent))
-        println("myFragment-" + Thread.currentThread().name)
-    }
 
 }

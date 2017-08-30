@@ -7,6 +7,10 @@
 EventBus.register(this)
 EventBus.unRegister(this)
 ```
+#### 实现事件 Event 实体类（实现 IEvent 接口）
+```kotlin
+class XXXXEvent: IEvent
+```
 #### 发送事件
 ```kotlin
 EventBus.post(XXXEvent())
@@ -18,7 +22,7 @@ EventBus.post(XXXEvent())
 
 ```kotlin
 @Subscriber(tag = DEFAULT_TAG, mode = ThreadMode.MAIN)
-    private fun change2(event: ToastEvent){
+    private fun change2(event: XXXEvent){
         textView2.text = "今天星期五"
         textView2.setTextColor(resources.getColor(R.color.colorAccent))
 

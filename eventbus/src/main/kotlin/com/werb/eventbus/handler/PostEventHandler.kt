@@ -1,5 +1,6 @@
 package com.werb.eventbus.handler
 
+import com.werb.eventbus.IEvent
 import com.werb.eventbus.Subscription
 import java.lang.reflect.InvocationTargetException
 
@@ -11,9 +12,9 @@ import java.lang.reflect.InvocationTargetException
 
 internal class PostEventHandler: EventHandler {
 
-    override fun handleEvent(subscription: Subscription) {
+    override fun handleEvent(subscription: Subscription, event: IEvent) {
         try {
-            subscription.targetMethod.invoke(subscription.subscriber.get(), subscription.eventType.event)
+            subscription.targetMethod.invoke(subscription.subscriber.get(), event)
         } catch (e: IllegalAccessException) {
             e.printStackTrace()
         } catch (e: IllegalArgumentException) {

@@ -17,10 +17,10 @@ internal object EventDispatcher {
     private val mainHandler = MainEventHandler()
     private val asyncHandler = AsyncEventHandler()
 
-    fun dispatcherEvent(list: CopyOnWriteArrayList<Subscription>) {
+    fun dispatcherEvent(event: IEvent, list: CopyOnWriteArrayList<Subscription>) {
         list.forEach {
             val eventHandler = getEventHandler(it.threadMode)
-            eventHandler.handleEvent(it)
+            eventHandler.handleEvent(it, event)
         }
     }
 

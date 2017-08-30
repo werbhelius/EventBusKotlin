@@ -1,8 +1,11 @@
 package com.werb.eventbuskotlin
 
 import android.os.Bundle
+import android.os.Handler
 import android.os.SystemClock
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import android.widget.Toast
 import com.werb.eventbus.EventBus
 import com.werb.eventbus.Subscriber
@@ -17,10 +20,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        supportFragmentManager.beginTransaction().add(R.id.content, MyFragment(), MyFragment::class.java.name).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().add(R.id.content_layout, MyFragment(), MyFragment::class.java.name).commitAllowingStateLoss()
 
-        button.setOnClickListener {
-            EventBus.post(ToastEvent())
+        login.setOnClickListener {
+            LoginFragment().show(supportFragmentManager, "LoginFragment")
         }
     }
 
@@ -34,14 +37,17 @@ class MainActivity : AppCompatActivity() {
         EventBus.unRegister(this)
     }
 
-    @Subscriber()
-    private fun toast(event: ToastEvent){
-        Toast.makeText(this, "lalallalalalal", Toast.LENGTH_SHORT).show()
-        println("myActivity -" + Thread.currentThread().name)
+    @Subscriber
+    private fun login(event: LoginEvent) {
+        if (event.login) {
+            login.text = "已登录"
+            Handler().postDelayed({
+                login.visibility = View.GONE
+            }, 200)
+        } else {
+            login.text = "点击登录"
+            login.visibility = View.VISIBLE
+        }
     }
 
-    private fun run() {
-        val forecastJsonStr = URL(" https://demo.duodian.com/api/v1/topics?type=latest").readText()
-        println(forecastJsonStr)
-    }
 }

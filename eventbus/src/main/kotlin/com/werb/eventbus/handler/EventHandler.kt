@@ -1,5 +1,6 @@
 package com.werb.eventbus.handler
 
+import com.werb.eventbus.IEvent
 import com.werb.eventbus.Subscription
 
 /**
@@ -8,6 +9,6 @@ import com.werb.eventbus.Subscription
 
 internal interface EventHandler {
 
-    fun handleEvent(subscription: Subscription)
+    fun handleEvent(subscription: Subscription, event: IEvent)
 
 }

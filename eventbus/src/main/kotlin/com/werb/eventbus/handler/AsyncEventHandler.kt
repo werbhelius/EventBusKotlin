@@ -22,9 +22,9 @@ internal class AsyncEventHandler: EventHandler {
         dispatcherThread.start()
     }
 
-    override fun handleEvent(subscription: Subscription) {
+    override fun handleEvent(subscription: Subscription, event: IEvent) {
         dispatcherThread.post(Runnable {
-            postEventHandler.handleEvent(subscription)
+            postEventHandler.handleEvent(subscription, event)
         })
     }
 

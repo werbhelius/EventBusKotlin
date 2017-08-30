@@ -5,7 +5,7 @@ package com.werb.eventbus
  * Created by wanbo <werbhelius@gmail.com> on 2017/8/19.
  * */
 
-internal class EventType(var event: IEvent,var tag: String) {
+internal class EventType(var eventClass: Class<IEvent>,var tag: String) {
 
     override fun equals(other: Any?): Boolean {
         // 比较内存引用地址，相同则返回 true
@@ -21,14 +21,14 @@ internal class EventType(var event: IEvent,var tag: String) {
         // 能执行到这里，说明 obj 和 this 同类且非 null
         val eventType = other as EventType
         val tagJudge = tag == eventType.tag
-        val eventJudge = event.javaClass.name == eventType.event.javaClass.name
+        val eventJudge = eventClass.name == eventClass.name
 
         return tagJudge && eventJudge
     }
 
     override fun hashCode(): Int {
         var hash = 7
-        hash = hash * 31 + event.hashCode()
+        hash = hash * 31 + eventClass.hashCode()
         hash = hash * 31 + tag.hashCode()
         return hash
     }

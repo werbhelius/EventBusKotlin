@@ -14,10 +14,10 @@ internal class MainEventHandler: EventHandler {
 
     private val handler = Handler(Looper.getMainLooper())
 
-    override fun handleEvent(subscription: Subscription) {
+    override fun handleEvent(subscription: Subscription, event: IEvent) {
         handler.post({
             try {
-                subscription.targetMethod.invoke(subscription.subscriber.get(), subscription.eventType.event)
+                subscription.targetMethod.invoke(subscription.subscriber.get(), event)
             } catch (e: IllegalAccessException) {
                 e.printStackTrace()
             } catch (e: IllegalArgumentException) {
