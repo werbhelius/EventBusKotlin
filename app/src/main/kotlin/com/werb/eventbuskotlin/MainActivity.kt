@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     @Subscriber()
     private fun toast(event: ToastEvent){
         Toast.makeText(this, "lalallalalalal", Toast.LENGTH_SHORT).show()
-        println("myActivity - 101-" + Thread.currentThread().name)
+        println("myActivity -" + Thread.currentThread().name)
     }
 
     private fun run() {

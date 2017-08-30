@@ -35,14 +35,14 @@ class MyFragment: Fragment() {
         textView.text = "今天星期天"
         textView.setTextColor(resources.getColor(R.color.colorPrimary))
 
-        println("myFragment - 100-" + Thread.currentThread().name)
+        println("myFragment-" + Thread.currentThread().name)
     }
 
     @Subscriber(mode = ThreadMode.MAIN)
     private fun change2(event: ToastEvent){
         textView2.text = "今天星期五"
         textView2.setTextColor(resources.getColor(R.color.colorAccent))
-        println("myFragment - 200-" + Thread.currentThread().name)
+        println("myFragment-" + Thread.currentThread().name)
     }
 
 }
