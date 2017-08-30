@@ -14,7 +14,6 @@ internal class Subscription(val subscriber: WeakReference<Any>,
                             val eventType: EventType) {
 
     val threadMode: ThreadMode = annotation.mode
-    val priority: Int = annotation.priority
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

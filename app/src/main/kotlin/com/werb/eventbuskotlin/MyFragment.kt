@@ -25,20 +25,24 @@ class MyFragment: Fragment() {
         textView.text = "今天星期一"
     }
 
-    @Subscriber(priority = 100)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        EventBus.unRegister(this)
+    }
+
+    @Subscriber()
     private fun change(event: ToastEvent){
         textView.text = "今天星期天"
         textView.setTextColor(resources.getColor(R.color.colorPrimary))
 
-        println("myActivity - 100")
+        println("myFragment - 100-" + Thread.currentThread().name)
     }
 
-    @Subscriber(tag = DEFAULT_TAG, priority = 200, mode = ThreadMode.MAIN)
+    @Subscriber(mode = ThreadMode.MAIN)
     private fun change2(event: ToastEvent){
         textView2.text = "今天星期五"
         textView2.setTextColor(resources.getColor(R.color.colorAccent))
-
-        println("myActivity - 200")
+        println("myFragment - 200-" + Thread.currentThread().name)
     }
 
 }

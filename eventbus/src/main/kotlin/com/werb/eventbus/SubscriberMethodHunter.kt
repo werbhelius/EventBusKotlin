@@ -82,6 +82,7 @@ internal class SubscriberMethodHunter(private val subscriberMap: MutableMap<Even
         }
     }
 
+    /** 判断是否有已存在的 EventType */
     internal fun getMatchEventType(type: EventType): CopyOnWriteArrayList<Subscription>? {
         val keys = subscriberMap.keys
         return keys.firstOrNull { it == type }?.let { subscriberMap[it] }
