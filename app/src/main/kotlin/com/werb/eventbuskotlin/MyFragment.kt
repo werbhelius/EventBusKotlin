@@ -5,9 +5,12 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.werb.eventbus.EventBus
 import com.werb.eventbus.Subscriber
 import com.werb.eventbus.ThreadMode
@@ -31,7 +34,9 @@ class MyFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         EventBus.register(this)
 
-        info.text = "还未登录，请点击按钮登录"
+        val text = "MyFragment 中的列表使用 <a href=\"https://github.com/Werb/MoreType\">MoreType</a> 构建 "
+        info.text = Html.fromHtml(text)
+        info.movementMethod = LinkMovementMethod.getInstance()
         adapter.register(CardViewType())
                 .register(MeizhiViewType())
                 .attachTo(list)
@@ -53,14 +58,12 @@ class MyFragment : Fragment() {
     @Subscriber
     private fun login(event: LoginEvent) {
         if (event.login) {
-            info.text = "登录成功"
             info.visibility = View.GONE
             list.layoutManager = LinearLayoutManager(context)
             buildData()
         } else {
             adapter.removeAllData()
             info.visibility = View.VISIBLE
-            info.text = "还未登录，请点击按钮登录"
         }
     }
 
@@ -92,10 +95,14 @@ class MyFragment : Fragment() {
     private fun loadRequest(event: LoginEvent){
         list.layoutManager = GridLayoutManager(context, 2)
         event.meizhis?.let {
-            info.text = "登录成功"
             info.visibility = View.GONE
             adapter.loadData(it.results)
         }
+    }
+
+    @Subscriber(mode = ThreadMode.MAIN)
+    private fun main(event: MainEvent) {
+        Toast.makeText(context, "UI 操作必须在 main 线程中操作", Toast.LENGTH_SHORT).show()
     }
 
 }

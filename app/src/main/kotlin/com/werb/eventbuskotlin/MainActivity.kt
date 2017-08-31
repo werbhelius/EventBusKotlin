@@ -2,12 +2,10 @@ package com.werb.eventbuskotlin
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.werb.eventbus.EventBus
 import com.werb.eventbus.Subscriber
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.my_fragment.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +23,13 @@ class MainActivity : AppCompatActivity() {
         background.setOnClickListener {
             EventBus.post(RequestMeizhiEvent())
         }
+
+        main.setOnClickListener {
+            Thread{
+                EventBus.post(MainEvent())
+            }.start()
+        }
+
     }
 
     override fun onStart() {

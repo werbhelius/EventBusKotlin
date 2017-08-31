@@ -37,6 +37,14 @@
           android:textAllCaps="false"
           android:gravity="center"/>
 
+      <android.support.v7.widget.AppCompatButton
+          android:id="@+id/main"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:text="在子线程中发送 Event 在 main 线程中响应"
+          android:textAllCaps="false"
+          android:gravity="center"/>
+
    </LinearLayout>
 
    <FrameLayout

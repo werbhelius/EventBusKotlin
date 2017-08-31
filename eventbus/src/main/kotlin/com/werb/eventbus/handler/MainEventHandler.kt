@@ -4,6 +4,7 @@ import android.os.Handler
 import com.werb.eventbus.IEvent
 import com.werb.eventbus.Subscription
 import android.os.Looper
+import java.lang.reflect.InvocationTargetException
 
 /**
  * 回调 UI 线程处理事件
@@ -22,6 +23,8 @@ internal class MainEventHandler: EventHandler {
                 e.printStackTrace()
             } catch (e: IllegalArgumentException) {
                 e.printStackTrace()
+            } catch (e: InvocationTargetException) {
+                throw e.targetException
             }
         })
     }

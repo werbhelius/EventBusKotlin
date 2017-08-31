@@ -1,9 +1,9 @@
 package com.werb.eventbus.handler
 
-import android.os.Handler
-import android.os.HandlerThread
 import com.werb.eventbus.IEvent
 import com.werb.eventbus.Subscription
+import java.lang.reflect.InvocationTargetException
+import java.util.concurrent.Executors
 
 /**
  * 异步线程处理事件
@@ -14,32 +14,20 @@ import com.werb.eventbus.Subscription
 
 internal class AsyncEventHandler: EventHandler {
 
-    private var dispatcherThread: DispatcherThread
-    private val postEventHandler = PostEventHandler()
+    private val bgExecutor = Executors.newCachedThreadPool()
 
-    init {
-        dispatcherThread = DispatcherThread("AsyncEventHandler")
-        dispatcherThread.start()
-    }
 
     override fun handleEvent(subscription: Subscription, event: IEvent) {
-        dispatcherThread.post(Runnable {
-            postEventHandler.handleEvent(subscription, event)
-        })
-    }
-
-    private inner class DispatcherThread(threadName: String): HandlerThread(threadName) {
-
-        private var asyncHandler: Handler? = null
-
-        @Synchronized override fun start() {
-            super.start()
-            asyncHandler = Handler(this.looper)
+        bgExecutor.execute {
+            try {
+                subscription.targetMethod.invoke(subscription.subscriber.get(), event)
+            } catch (e: IllegalAccessException) {
+                e.printStackTrace()
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+            } catch (e: InvocationTargetException) {
+                throw e.targetException
+            }
         }
-
-        fun post(runnable: Runnable){
-            asyncHandler?.post(runnable) ?: throw NullPointerException(" asyncHandler == null, must call start() first")
-        }
-
     }
 }
