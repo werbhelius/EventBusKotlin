@@ -10,10 +10,8 @@ import java.lang.reflect.Method
 
 internal class Subscription(val subscriber: WeakReference<Any>,
                             val targetMethod: Method,
-                            val annotation: Subscriber,
+                            val threadMode: ThreadMode,
                             val eventType: EventType) {
-
-    val threadMode: ThreadMode = annotation.mode
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

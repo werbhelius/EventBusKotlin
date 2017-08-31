@@ -34,14 +34,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        // 注册 EventBus
         EventBus.register(this)
     }
 
     override fun onStop() {
         super.onStop()
+        // 注销 EventBus
         EventBus.unRegister(this)
     }
 
+    /** 符合 LoginEvent 且 tag = Default_TAG 时执行此方法，执行线程为 POST 线程*/
     @Subscriber
     private fun login(event: LoginEvent) {
         if (event.login) {
@@ -56,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /** 符合 LoginEvent 且 tag = request load data 时执行此方法，执行线程为 POST 线程*/
     @Subscriber(tag = "request load data")
     private fun loadRequest(event: LoginEvent) {
         login.text = "已登录"

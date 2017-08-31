@@ -32,9 +32,11 @@ class MyFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        // 注册 EventBus
         EventBus.register(this)
 
-        val text = "MyFragment 中的列表使用 <a href=\"https://github.com/Werb/MoreType\">MoreType</a> 构建 "
+        val text = "MyFragment 中的列表使用 <a href=\"https://github.com/Werb/MoreType\">MoreType</a> 构建 <br> 这是我尝试用 Kotlin 写的一个用于构建" +
+                " RecyclerView 列表的第三方库 "
         info.text = Html.fromHtml(text)
         info.movementMethod = LinkMovementMethod.getInstance()
         adapter.register(CardViewType())
@@ -44,6 +46,7 @@ class MyFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // 注销 EventBus
         EventBus.unRegister(this)
     }
 
@@ -55,6 +58,7 @@ class MyFragment : Fragment() {
         adapter.loadData(list)
     }
 
+    /** 符合 LoginEvent 且 tag = DEFAULT_TAG 时执行此方法，执行线程为 POST 线程*/
     @Subscriber
     private fun login(event: LoginEvent) {
         if (event.login) {
@@ -67,6 +71,7 @@ class MyFragment : Fragment() {
         }
     }
 
+    /** 符合 CardDeleteEvent 且 tag = delete 时执行此方法，执行线程为 POST 线程*/
     @Subscriber(tag = "delete")
     private fun delete(event: CardDeleteEvent) {
         val position = event.position
@@ -78,19 +83,22 @@ class MyFragment : Fragment() {
         }
     }
 
+    /** 符合 CardDeleteEvent 且 tag = not delete 时执行此方法，执行线程为 POST 线程*/
     @Subscriber(tag = "not delete")
     private fun back(event: CardDeleteEvent) {
-        Snackbar.make(fragment_layout, "Card not delete by tag \" not delete \"", 500)
+        Snackbar.make(fragment_layout, "Card not delete by tag \" not delete \"", 3000)
                 .setAction("ok", {})
                 .show()
     }
 
+    /** 符合 RequestMeizhiEvent 且 tag = not delete 时执行此方法，执行线程为 BACKGROUND 线程*/
     @Subscriber(mode = ThreadMode.BACKGROUND)
     private fun request(event: RequestMeizhiEvent){
         val data = URL("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/1").readText()
         LoginDialogFragment.newInstance("request", data).show(fragmentManager, "LoginDialogFragment")
     }
 
+    /** 符合 LoginEvent 且 tag = request load data 时执行此方法，执行线程为 POST 线程*/
     @Subscriber(tag = "request load data")
     private fun loadRequest(event: LoginEvent){
         list.layoutManager = GridLayoutManager(context, 2)
@@ -100,9 +108,11 @@ class MyFragment : Fragment() {
         }
     }
 
+    /** 符合 MainEvent 且 tag = DEFAULT_TAG 时执行此方法，执行线程为 MAIN UI 线程，此 Event 由子线程发出，操作 UI 需要在 MAIN 线程中*/
     @Subscriber(mode = ThreadMode.MAIN)
     private fun main(event: MainEvent) {
-        Toast.makeText(context, "UI 操作必须在 main 线程中操作", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "UI 操作必须在 main 线程中操作", Toast.LENGTH_LONG).show()
+        info.setTextColor(resources.getColor(R.color.colorAccent))
     }
 
 }

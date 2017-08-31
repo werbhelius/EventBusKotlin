@@ -5,7 +5,7 @@ package com.werb.eventbus
  * Created by wanbo <werbhelius@gmail.com> on 2017/8/19.
  * */
 
-internal class EventType(var eventClass: Class<IEvent>,var tag: String) {
+internal class EventType(private var eventClass: Class<IEvent>, private var tag: String) {
 
     override fun equals(other: Any?): Boolean {
         // 比较内存引用地址，相同则返回 true

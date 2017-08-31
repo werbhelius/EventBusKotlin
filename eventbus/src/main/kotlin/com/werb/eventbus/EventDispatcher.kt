@@ -13,8 +13,11 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 internal object EventDispatcher {
 
+    /** POST 线程即事件发出的线程 */
     private val postHandler = PostEventHandler()
+    /** MAIN 线程 UI 线程 */
     private val mainHandler = MainEventHandler()
+    /** BACKGROUND 线程，ExecutorService 线程池 */
     private val asyncHandler = AsyncEventHandler()
 
     fun dispatcherEvent(event: IEvent, list: CopyOnWriteArrayList<Subscription>) {
