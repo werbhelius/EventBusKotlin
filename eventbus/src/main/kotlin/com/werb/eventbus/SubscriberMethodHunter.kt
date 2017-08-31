@@ -41,7 +41,7 @@ internal class SubscriberMethodHunter(private val subscriberMap: MutableMap<Even
     }
 
     /** 根据 EventType 来确定一对多的订阅关系 */
-    private fun subscribe(type: EventType, subscription: Subscription) {
+    @Synchronized private fun subscribe(type: EventType, subscription: Subscription) {
         var subscriptionLists: CopyOnWriteArrayList<Subscription>? = getMatchEventType(type)
         if (subscriptionLists == null) {
             subscriptionLists = CopyOnWriteArrayList()

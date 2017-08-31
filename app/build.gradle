@@ -40,4 +40,9 @@ dependencies {
     implementation project(':eventbus')
     implementation 'com.android.support:recyclerview-v7:26.0.1'
     implementation 'com.werb.moretype:moretype:0.1.5-beta10'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation 'com.android.support:cardview-v7:26.0.1'
+    implementation 'com.android.support:design:26.0.1'
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.github.bumptech.glide:glide:4.0.0-RC1'
 }

@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="com.werb.eventbuskotlin.MainActivity">
+    tools:context="com.werb.eventbuskotlin.MainActivity"
+    android:orientation="vertical">
 
-   <android.support.v7.widget.AppCompatButton
-       android:id="@+id/login"
+   <android.support.v7.widget.Toolbar
+       android:id="@+id/toolbar"
        android:layout_width="match_parent"
        android:layout_height="?attr/actionBarSize"
-       android:text="点击登录"
-       android:gravity="center"/>
+       app:theme="@style/ThemeOverlay.AppCompat.Dark"
+       android:background="@color/colorPrimary"/>
+
+   <LinearLayout
+       android:id="@+id/button_layout"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+      <android.support.v7.widget.AppCompatButton
+          android:id="@+id/login"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:text="模拟登录(发送普通 Event)"
+          android:textAllCaps="false"
+          android:gravity="center"/>
+
+      <android.support.v7.widget.AppCompatButton
+          android:id="@+id/background"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:text="网络请求(发送异步 Event)"
+          android:textAllCaps="false"
+          android:gravity="center"/>
+
+   </LinearLayout>
 
    <FrameLayout
        android:id="@+id/content_layout"
-       android:layout_below="@+id/login"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>
 
-</RelativeLayout>
+</LinearLayout>

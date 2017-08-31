@@ -20,7 +20,7 @@ internal class PostEventHandler: EventHandler {
         } catch (e: IllegalArgumentException) {
             e.printStackTrace()
         } catch (e: InvocationTargetException) {
-            e.printStackTrace()
+            throw e.targetException
         }
     }
 }

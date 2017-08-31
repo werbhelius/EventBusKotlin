@@ -1,17 +1,13 @@
 package com.werb.eventbuskotlin
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.SystemClock
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.GridLayoutManager
 import android.view.View
-import android.widget.Toast
 import com.werb.eventbus.EventBus
 import com.werb.eventbus.Subscriber
-import com.werb.eventbus.ThreadMode
 import kotlinx.android.synthetic.main.activity_main.*
-import java.net.URL
+import kotlinx.android.synthetic.main.my_fragment.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,11 +15,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        toolbar.title = getString(R.string.app_name)
         supportFragmentManager.beginTransaction().add(R.id.content_layout, MyFragment(), MyFragment::class.java.name).commitAllowingStateLoss()
 
         login.setOnClickListener {
-            LoginFragment().show(supportFragmentManager, "LoginFragment")
+            LoginDialogFragment.newInstance("login", "A Simple EventBus with Kotlin").show(supportFragmentManager, "LoginDialogFragment")
+        }
+
+        background.setOnClickListener {
+            EventBus.post(RequestMeizhiEvent())
         }
     }
 
@@ -41,13 +41,22 @@ class MainActivity : AppCompatActivity() {
     private fun login(event: LoginEvent) {
         if (event.login) {
             login.text = "已登录"
-            Handler().postDelayed({
-                login.visibility = View.GONE
-            }, 200)
+            button_layout.visibility = View.GONE
+            toolbar.inflateMenu(R.menu.toolbar)
+            toolbar.setOnMenuItemClickListener { EventBus.post(LoginEvent(false)); true }
         } else {
-            login.text = "点击登录"
-            login.visibility = View.VISIBLE
+            login.text = "模拟登录(发送普通 Event)"
+            button_layout.visibility = View.VISIBLE
+            toolbar.menu.clear()
         }
+    }
+
+    @Subscriber(tag = "request load data")
+    private fun loadRequest(event: LoginEvent) {
+        login.text = "已登录"
+        button_layout.visibility = View.GONE
+        toolbar.inflateMenu(R.menu.toolbar)
+        toolbar.setOnMenuItemClickListener { EventBus.post(LoginEvent(false)); true }
     }
 
 }
