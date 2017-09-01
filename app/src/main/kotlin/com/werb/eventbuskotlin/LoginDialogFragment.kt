@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import com.google.gson.Gson
 import com.werb.eventbus.EventBus
 import com.werb.eventbuskotlin.meizhi.Meizhi
@@ -32,12 +33,15 @@ class LoginDialogFragment : DialogFragment() {
                 .setMessage(message)
                 .setPositiveButton("login", {_,_ ->
                     if (type == "login") {
+                        Log.d("eventbuskotlin-post", "LoginEvent tag = \"DEFAULT_TAG\", Thread = " + Thread.currentThread().name)
                         EventBus.post(LoginEvent(true))
                     }else if (type == "request"){
+                        Log.d("eventbuskotlin-post", "LoginEvent tag = \"request load data\", Thread = " + Thread.currentThread().name)
                         val _meizhi = Gson().fromJson<Meizhi>(message, Meizhi::class.java)
                         EventBus.post(LoginEvent(true).apply {
                             meizhis = _meizhi
                         }, "request load data")
+
                     }
                 })
                 .create()
