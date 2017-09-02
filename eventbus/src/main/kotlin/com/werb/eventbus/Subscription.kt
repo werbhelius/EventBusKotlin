@@ -10,8 +10,7 @@ import java.lang.reflect.Method
 
 internal class Subscription(val subscriber: WeakReference<Any>,
                             val targetMethod: Method,
-                            val threadMode: ThreadMode,
-                            val eventType: EventType) {
+                            val threadMode: ThreadMode) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -25,8 +24,7 @@ internal class Subscription(val subscriber: WeakReference<Any>,
         val subscription = other as Subscription
         val judgeSubscriber = this.subscriber.get() === subscription.subscriber.get()
         val judgeMethod = this.targetMethod.name == subscription.targetMethod.name
-        val judgeEventType = this.eventType == subscription.eventType
-        return judgeSubscriber && judgeMethod && judgeEventType
+        return judgeSubscriber && judgeMethod
     }
 
     override fun hashCode(): Int {
@@ -34,7 +32,6 @@ internal class Subscription(val subscriber: WeakReference<Any>,
         hash = hash * 31 + subscriber.hashCode()
         hash = hash * 31 + targetMethod.hashCode()
         hash = hash * 31 + threadMode.hashCode()
-        hash = hash * 31 + eventType.hashCode()
         return hash
     }
 

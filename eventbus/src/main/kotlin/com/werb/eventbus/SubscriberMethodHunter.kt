@@ -29,7 +29,7 @@ internal class SubscriberMethodHunter(private val subscriberMap: MutableMap<Even
                             method.isAccessible = true
                             @Suppress("UNCHECKED_CAST")
                             val eventType = EventType(paramsEvent as Class<IEvent>, annotation.tag)
-                            val subscription = Subscription(WeakReference(subscriber), method, annotation.mode, eventType)
+                            val subscription = Subscription(WeakReference(subscriber), method, annotation.mode)
                             subscribe(eventType, subscription)
                         }
                     }
