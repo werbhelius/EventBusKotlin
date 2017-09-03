@@ -7,6 +7,8 @@ Android 中 提供了 Handler 来进行组件间的通信，而 Handler 在使�
 
 用了那么久 EventBus 所以我决定自己实现一个，正好最近项目开始使用 Kotlin 来写，所以本文中的代码和例子全部使用 Kotlin 来完成。
 
+Github 地址：[https://github.com/Werb/EventBusKotlin](https://github.com/Werb/EventBusKotlin)
+
 ## EventBus 的原理
 前面说了 EventBus 是基于**观察者模式**，核心是**事件**。通过事件的发布和订阅实现组件之间的通信，EventBus 默认是一个单例存在，在 Java 中还需要使用 Synchronized 来保证线程安全。通俗来讲，EventBus 通过注册将所有订阅事件的方法储存在集合中，当有事件发布的时候，根据某些规则，匹配出符合条件的方法，调用执行，从而实现组件间的通信。
 
@@ -14,7 +16,7 @@ Android 中 提供了 Handler 来进行组件间的通信，而 Handler 在使�
 
 ## EventBus 具体实现
 
-EventBus 最终的目的，是在当有`事件`发生的时候，调用执行对应的方法，这里我们采用注解的方式来标记执行的方法，最终通过反射来调用。
+EventBus 最终的目的，是在当有**事件**发生的时候，调用执行对应的方法，这里我们采用注解的方式来标记执行的方法，最终通过反射来调用。
 
 ### Subscriber
 
@@ -51,7 +53,7 @@ annotation class Subscriber(val tag: String = DEFAULT_TAG, val mode: ThreadMode 
 
 #### IEvent
 
-在这里，我定义了一个空的接口 `IEvent` ，我们通过 `EventBus` 发出的事件类需要实现这个借口，同时在通过注解定义事件执行方法的时候，需要讲我们接收的某个事件类作为方法的参数，有且只有一个参数，它就是我们的被观察者。
+在这里，我定义了一个空的接口 `IEvent` ，我们通过 `EventBus` 发出的事件类需要实现这个接口，同时在通过注解定义事件执行方法的时候，需要将我们接收的某个事件类作为方法的参数，有且只有一个参数，它就是我们的被观察者。
 
 **一个完整的例子：**
 ```kotlin
@@ -81,7 +83,7 @@ private fun logout(event: SessionEvent) {
 ```
 ***
 
-前面说了，我们需要将所有订阅事件的方法存储到一个集合中，当有`事件`发出的时候，我们通过某些规则，匹配出符合条件的方法，调用执行。所以，首先我们需要去定采用哪种集合来存储，存储时的规则是什么。
+前面说了，我们需要将所有订阅事件的方法存储到一个集合中，当有**事件**发出的时候，我们通过某些规则，匹配出符合条件的方法，调用执行。所以，首先我们需要去定采用哪种集合来存储，存储时的规则是什么。
 
 ### MutableMap
 
@@ -225,9 +227,9 @@ fun register(subscriber: Any) {
 }
 ```
 
-* `subscriber: Any` 是我们的观察者对象，它可以是一个 `Activity` 或 `Fragment` 或 `Service`。
+`subscriber: Any` 是我们的观察者对象，它可以是一个 `Activity` 或 `Fragment` 或 `Service`。
 
-举个例子来说注册的流程，当我们注册一个 `Activity` 到 `EventBus` 中时，我们通过 `methodHunter.findSubscribeMethods(subscriber)` 方法，查找出当前 `Activity` 中被 `@Subscriber`关键字来标记方法，判断的规则如下：
+举个例子来说注册的流程，当我们注册一个 `Activity` 到 `EventBus` 中时，我们通过 `methodHunter.findSubscribeMethods(subscriber)` 方法，查找出当前 `Activity` 中被`@Subscriber`关键字来标记方法，判断的规则如下：
 
 1. 被 `@Subscriber` 关键字标记
 2. 订阅函数只支持一个参数
@@ -417,3 +419,5 @@ internal class AsyncEventHandler: EventHandler {
 三种环境中，核心的执行方法都是一样的，采用反射来调用具体事件的执行方法，仅仅是方法所在的执行环境不同而已。
 
 **到目前为止，我们的 EventBus 就完成了，通过注解的形式实现事件的执行方法，通过注册观察者对象，生成 key 和 value 建立关系存储到集合中，在事件发出的时候，查找出对应的事件方法集合，然后在指定的执行环境中调用。**
+
+我是 wanbo，一个会写代码的音乐人。
