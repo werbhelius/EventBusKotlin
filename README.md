@@ -2,6 +2,8 @@
 
 用 Kotlin 简单实现了一个 EventBus
 
+[如何自己实现一个 EventBus](https://github.com/Werb/EventBusKotlin/wiki/%E5%A6%82%E4%BD%95%E8%87%AA%E5%B7%B1%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA-EventBus)
+
 #### 注册和取消注册
 ```kotlin
 EventBus.register(this)
