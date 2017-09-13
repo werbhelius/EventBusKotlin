@@ -42,3 +42,14 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+
+apply plugin: 'com.novoda.bintray-release'
+publish {
+    userOrg = 'werbhelius'
+    groupId = 'com.werb.eventbuskotlin'
+    artifactId = 'eventbus'
+    publishVersion = '0.1.0'
+    desc = 'A Simple EventBus with kotlin'
+    website = 'https://github.com/Werb/EventBusKotlin'
+}
