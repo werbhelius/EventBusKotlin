@@ -6,6 +6,16 @@
 
 [![Download](https://api.bintray.com/packages/werbhelius/maven/eventbuskotlin/images/download.svg) ](https://bintray.com/werbhelius/maven/eventbuskotlin/_latestVersion)
 
+## Dependency
+```gradle
+compile 'com.werb.eventbuskotlin:eventbuskotlin:0.1.0'
+```
+or
+```gradle
+implementation 'com.werb.eventbuskotlin:eventbuskotlin:0.1.0'
+```
+
+
 #### 注册和取消注册
 ```kotlin
 EventBus.register(this)
