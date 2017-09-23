@@ -14,8 +14,8 @@ internal class SubscriberMethodHunter(private val subscriberMap: MutableMap<Even
 
     /** 查找对象中有注解标记的执行方法 */
     @Synchronized fun findSubscribeMethods(subscriber: Any) {
-        var clazz: Class<*>? = subscriber.javaClass
-        while (clazz != null && !isSystemClass(clazz.name)) {
+        val clazz: Class<*>? = subscriber.javaClass
+        if (clazz != null && !isSystemClass(clazz.name)) {
             val allMethods = clazz.declaredMethods
             for (method in allMethods) {
                 val annotation = method.getAnnotation(Subscriber::class.java)
@@ -35,8 +35,6 @@ internal class SubscriberMethodHunter(private val subscriberMap: MutableMap<Even
                     }
                 }
             }
-
-            clazz = clazz.superclass
         }
     }
 
