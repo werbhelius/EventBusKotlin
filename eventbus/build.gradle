@@ -46,7 +46,7 @@ publish {
     userOrg = 'werbhelius'
     groupId = 'com.werb.eventbuskotlin'
     artifactId = 'eventbuskotlin'
-    publishVersion = '0.1.6'
+    publishVersion = '0.1.7'
     desc = 'A Simple EventBus with kotlin'
     website = 'https://github.com/Werb/EventBusKotlin'
 }
