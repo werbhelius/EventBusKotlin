@@ -8,11 +8,11 @@
 
 ## Dependency
 ```gradle
-compile 'com.werb.eventbuskotlin:eventbuskotlin:0.1.0'
+compile 'com.werb.eventbuskotlin:eventbuskotlin:0.1.6'
 ```
 or
 ```gradle
-implementation 'com.werb.eventbuskotlin:eventbuskotlin:0.1.0'
+implementation 'com.werb.eventbuskotlin:eventbuskotlin:0.1.6'
 ```
 
 
