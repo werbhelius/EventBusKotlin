@@ -22,8 +22,12 @@ internal object EventDispatcher {
 
     fun dispatcherEvent(event: IEvent, list: CopyOnWriteArrayList<Subscription>) {
         list.forEach {
-            val eventHandler = getEventHandler(it.threadMode)
-            eventHandler.handleEvent(it, event)
+            val weekSubscriber = it.subscriber.get()
+            val _this = it
+            weekSubscriber?.let {
+                val eventHandler = getEventHandler(_this.threadMode)
+                eventHandler.handleEvent(_this, event)
+            }
         }
     }
 
