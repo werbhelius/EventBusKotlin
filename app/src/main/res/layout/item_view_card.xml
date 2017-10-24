@@ -26,7 +26,7 @@
             android:background="@mipmap/ic_launcher" />
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/title"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
@@ -42,7 +42,7 @@
             android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
+            android:layout_below="@+id/name"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"

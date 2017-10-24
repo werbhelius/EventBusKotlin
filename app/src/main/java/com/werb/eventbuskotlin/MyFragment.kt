@@ -16,9 +16,10 @@ import com.werb.eventbus.EventBus
 import com.werb.eventbus.Subscriber
 import com.werb.eventbus.ThreadMode
 import com.werb.eventbuskotlin.card.Card
-import com.werb.eventbuskotlin.card.CardViewType
-import com.werb.eventbuskotlin.meizhi.MeizhiViewType
+import com.werb.eventbuskotlin.card.CardViewHolder
+import com.werb.eventbuskotlin.meizhi.MeizhiViewHolder
 import com.werb.library.MoreAdapter
+import com.werb.library.link.RegisterItem
 import kotlinx.android.synthetic.main.my_fragment.*
 import java.net.URL
 
@@ -40,9 +41,12 @@ class MyFragment : Fragment() {
                 " RecyclerView 列表的第三方库 "
         info.text = Html.fromHtml(text)
         info.movementMethod = LinkMovementMethod.getInstance()
-        adapter.register(CardViewType())
-                .register(MeizhiViewType())
-                .attachTo(list)
+
+        adapter.apply {
+            register(RegisterItem(R.layout.item_view_card, CardViewHolder::class.java))
+            register(RegisterItem(R.layout.item_view_meizhi, MeizhiViewHolder::class.java))
+            attachTo(recyclerView)
+        }
     }
 
     override fun onDestroyView() {
@@ -64,7 +68,7 @@ class MyFragment : Fragment() {
     private fun fragmentLogin(event: LoginEvent) {
         if (event.login) {
             info.visibility = View.GONE
-            list.layoutManager = LinearLayoutManager(context)
+            recyclerView.layoutManager = LinearLayoutManager(context)
             buildData()
         } else {
             adapter.removeAllData()
@@ -106,7 +110,7 @@ class MyFragment : Fragment() {
     /** 符合 LoginEvent 且 tag = request load data 时执行此方法，执行线程为 POST 线程*/
     @Subscriber(tag = "request load data")
     private fun fragmentLoadRequest(event: LoginEvent){
-        list.layoutManager = GridLayoutManager(context, 2)
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
         event.meizhis?.let {
             info.visibility = View.GONE
             adapter.loadData(it.results)
