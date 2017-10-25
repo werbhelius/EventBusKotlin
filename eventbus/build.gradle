@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.2.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -26,11 +26,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 repositories {
@@ -43,7 +38,7 @@ publish {
     userOrg = 'werbhelius'
     groupId = 'com.werb.eventbuskotlin'
     artifactId = 'eventbuskotlin'
-    publishVersion = '0.1.9'
+    publishVersion = '0.2.0'
     desc = 'A Simple EventBus with kotlin'
     website = 'https://github.com/Werb/EventBusKotlin'
 }
